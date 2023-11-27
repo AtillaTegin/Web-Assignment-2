@@ -15,7 +15,7 @@ header {
 }
 
 .adding-part {
-    display: flex;
+    display: inline-flex;
     align-items: center;
     background: midnightblue;
     min-width: 410px;
@@ -53,7 +53,7 @@ header {
 }
 /* ---------------------------------------------------------*/
 
-@media screen and (min-width: 900px) {
+@media (min-width: 900px) {
     .navbar-toggle {
         visibility: hidden;
     }
