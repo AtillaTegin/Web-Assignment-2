@@ -1,3 +1,5 @@
+document.querySelector('.navbar').style.width = "0px";
+
 function openNav() {
     document.getElementById("sideNavbar").style.width = "400px";
 }
@@ -23,9 +25,9 @@ const fetchData = function () {
             <div class="products-details">
                 <h3 class="products-name">${allProducts[i].title}</h3>
                 <h4 class="products-description">${allProducts[i].description}</h4>
-                <p class="products-brand"><span>${allProducts[i].brand}</span></p>
-                <p class="products-price"><span>${allProducts[i].price}</span></p>
-                <p class="products-rating"><span>${allProducts[i].rating}</span></p>
+                <p class="products-brand">Brand: <span>${allProducts[i].brand}</span></p>
+                <p class="products-price">Price: <span>${allProducts[i].price}</span>$</p>
+                <p class="products-rating">Rating: <span>${allProducts[i].rating}</span></p>
             </div>
             </article>`;
             console.log(main);
