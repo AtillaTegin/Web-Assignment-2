@@ -30,7 +30,7 @@ const fetchData = function () {
                 <p class="products-rating">Rating: <span>${allProducts[i].rating}</span></p>
             </div>
             </article>`;
-            console.log(main);
+            console.log(allProducts[i]);
             productsContainer.insertAdjacentHTML('beforeend', main);
         }
     })
