@@ -52,7 +52,7 @@ header {
     position: absolute;
 }
 
-.products-container, .products-container-one, .products-container-two, .products-container-three {
+.products-container {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
 }
@@ -150,6 +150,7 @@ header {
         color: #818181;
         display: block;
         transition: 0.3s;
+        cursor: pointer;
     }
     
     .navbar a:hover {
@@ -171,7 +172,7 @@ header {
 
     }
 
-    .products-container, .products-container-one, .products-container-two, .products-container-three {
+    .products-container{
         display: grid;
         grid-template-columns: 1fr 1fr;
     }
