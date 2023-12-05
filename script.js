@@ -36,47 +36,48 @@ const displayProducts = function(products,id) {
                     <p class="products-brand">Brand: <span>${products[i].brand}</span></p>
                     <p class="products-price">Price: <span>${products[i].price}</span>$</p>
                     <p class="products-rating">Rating: <span>${products[i].rating}</span></p>
+                    <button class="show-modal" id="${products[i].id}" onclick="openModal()">More Info...</button>
                 </div>
+                <button class="close-modal" onclick="closeModal()">&times;</button>
             </article>`;
             productsContainer.insertAdjacentHTML('beforeend', main);
         }
     }
-    if(id=="all"){
+    if(id=="all" || id=="house" || id=="care" || id=="tech"){
         getPrdcts()
     }
-    else if(id=="tech"){
-        getPrdcts()
-    }
-    else if(id=="care"){
-        getPrdcts()
-    }
-    else if(id=="house"){
-        getPrdcts()
-    }
+    document.querySelectorAll('.show-modal').forEach(button => {
+        console.log(button);
+        button.addEventListener('click', function() {
+            const productId = this.getAttribute('id');
+            openModal(allProducts.find(product => product.id === productId));
+        });
+    });
 };
 
-let ourprdcts;
-let filteredProducts2
-let catid
+
+let ourProducts;
+let filteredProducts2;
+let catid;
 fetch('https://dummyjson.com/products').then(response => response.json().then(data => {
-    ourprdcts = data.products;
+    ourProducts = data.products;
 
     document.querySelectorAll(".links").forEach(item => {
         item.addEventListener("click", function () {
             catid = this.getAttribute("id");
             document.querySelector('.input-bar').value=""
-            filteredProducts2 = ourprdcts.filter(prdtc => {
+            filteredProducts2 = ourProducts.filter(products => {
                 if(catid=="all"){
-                    return ourprdcts
+                    return ourProducts
                 }
                 else if (catid == "tech") {
-                    return prdtc.category == "smartphones" || prdtc.category == "laptops";
+                    return products.category == "smartphones" || products.category == "laptops";
                 }
                 else if (catid == "care") {
-                    return prdtc.category == "skincare" || prdtc.category == "fragrances";
+                    return products.category == "skincare" || products.category == "fragrances";
                 }
                 else if (catid == "house") {
-                    return prdtc.category == "groceries" || prdtc.category == "home-decoration";
+                    return products.category == "groceries" || products.category == "home-decoration";
                 }
             });
 
@@ -88,11 +89,36 @@ fetch('https://dummyjson.com/products').then(response => response.json().then(da
 
 const searchButton = document.querySelector('.search-button');
 searchButton.addEventListener('click', function() {
-    // console.log(filteredProducts2);
+    console.log(filteredProducts2);
     const inputValue = document.querySelector('.input-bar').value.toLowerCase();
     const filteredProducts = filteredProducts2.filter(product => product.title.toLowerCase().includes(inputValue));
     
     displayProducts(filteredProducts,catid);
 });
-
 document.addEventListener('DOMContentLoaded', fetchData);
+ 
+
+/* ------------------------------------------------------------------ */
+
+const modal = document.querySelector('.modal');
+const overlay = document.querySelector('.overlay');
+let btnCloseModal = document.querySelector('.close-modal');
+
+const closeModal = function(){
+    modal.classList.add('hidden');
+    overlay.classList.add('hidden');
+}
+
+const openModal = function(product) {
+    modal.innerHTML = modalContent;
+    const modalContent = `
+        <h1>${product.title}</h1>
+        <p>${product.description}</p>
+       
+    `;
+
+    // Show modal and overlay
+    modal.classList.remove('hidden');
+    overlay.classList.remove('hidden');
+};
+
