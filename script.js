@@ -18,9 +18,9 @@ const fetchData = function () {
 
     request.addEventListener('load', function() {
         const data = JSON.parse(this.responseText);
-        console.log(data);
         allProducts = data.products;
         displayProducts(allProducts,"all");
+        console.log(allProducts)
     });
 };
 
@@ -36,9 +36,8 @@ const displayProducts = function(products,id) {
                     <p class="products-brand">Brand: <span>${products[i].brand}</span></p>
                     <p class="products-price">Price: <span>${products[i].price}</span>$</p>
                     <p class="products-rating">Rating: <span>${products[i].rating}</span></p>
-                    <button class="show-modal" id="${products[i].id}" onclick="openModal()">More Info...</button>
+                    <button class="show-modal" id="${products[i].id}">More Info...</button>
                 </div>
-                <button class="close-modal" onclick="closeModal()">&times;</button>
             </article>`;
             productsContainer.insertAdjacentHTML('beforeend', main);
         }
@@ -47,10 +46,9 @@ const displayProducts = function(products,id) {
         getPrdcts()
     }
     document.querySelectorAll('.show-modal').forEach(button => {
-        console.log(button);
         button.addEventListener('click', function() {
             const productId = this.getAttribute('id');
-            openModal(allProducts.find(product => product.id === productId));
+            openModal(allProducts.find(product => product.id == productId));
         });
     });
 };
@@ -61,7 +59,6 @@ let filteredProducts2;
 let catid;
 fetch('https://dummyjson.com/products').then(response => response.json().then(data => {
     ourProducts = data.products;
-
     document.querySelectorAll(".links").forEach(item => {
         item.addEventListener("click", function () {
             catid = this.getAttribute("id");
@@ -80,16 +77,15 @@ fetch('https://dummyjson.com/products').then(response => response.json().then(da
                     return products.category == "groceries" || products.category == "home-decoration";
                 }
             });
-
         displayProducts(filteredProducts2,catid);
         
     });
 });
 }));
 
+
 const searchButton = document.querySelector('.search-button');
 searchButton.addEventListener('click', function() {
-    console.log(filteredProducts2);
     const inputValue = document.querySelector('.input-bar').value.toLowerCase();
     const filteredProducts = filteredProducts2.filter(product => product.title.toLowerCase().includes(inputValue));
     
@@ -102,7 +98,6 @@ document.addEventListener('DOMContentLoaded', fetchData);
 
 const modal = document.querySelector('.modal');
 const overlay = document.querySelector('.overlay');
-let btnCloseModal = document.querySelector('.close-modal');
 
 const closeModal = function(){
     modal.classList.add('hidden');
@@ -110,10 +105,19 @@ const closeModal = function(){
 }
 
 const openModal = function(product) {
-    modal.innerHTML = modalContent;
-    const modalContent = `
+    modal.innerHTML=" "
+    modal.innerHTML = `
         <h1>${product.title}</h1>
+        <h2>Brand: ${product.brand}</h2>
+        <h3>Original Price (${product.price}$) with ${Math.round(product.discountPercentage)}% DISCOUNT</h3>
+        <h3>Rating: ${product.rating}</h3>
+        <h4>There are ${product.stock} ${product.category} available in the stock</h4>
         <p>${product.description}</p>
+        <div id="image-container">
+            ${product.images.map((imageUrl) => `<img src="${imageUrl}" alt="">`).join('')}
+        </div>
+
+        <button class="close-modal" onclick="closeModal()"><i class="fa-solid fa-x"></i></button>
        
     `;
 
