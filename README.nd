@@ -1,0 +1,30 @@
+1. API Integration
+Fetching Data:
+The application integrates with the dummyjson.com API to retrieve product information. 
+The JavaScript code utilizes the XMLHttpRequest object to perform a GET request to the /products endpoint. 
+The fetched data is handled and stored in the allProducts array.
+
+
+2. Data Display (1)
+Displaying Products on Home Page:
+The home web page displays product information, including title, price, discount, category, stock, and thumbnail. 
+The displayProducts function is responsible for rendering the products on the page in a well-formatted and readable manner.
+
+
+3. Data Display (2)
+Detailed Product Information Page
+When a product is clicked, a new product info page is opened, displaying detailed information and a gallery of the product. 
+The openModal function handles the opening of the modal and populates it with detailed product information.
+
+
+4. Data Display (3)
+    a. Home Page Features
+        i. Search for a Keyword:
+        The home page provides a search feature that allows users to search for a keyword. 
+        The searchButton event listener triggers the search functionality, filtering products based on the entered keyword (part of title, description, or category).
+        ii. Filter Based on Category:
+        The home page includes a category filter that allows users to select a category from a dropdown list. 
+        Choosing a category filters the list of all products accordingly.
+
+Conclusion
+This README provides an overview of the key features of the product display application, including API integration, data display on the home page, and additional features such as detailed product information, search functionality, and category filtering.
